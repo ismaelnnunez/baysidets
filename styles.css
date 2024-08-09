@@ -8,11 +8,18 @@ body {
     font-family: Arial;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
 /* --------------------- Navigation bar --------------------- */
 
 nav {
+    flex: 0 0 content;
     display: flex;
-    box-shadow: 0 5px 5px -5px black;
+    box-shadow: 0 5px 5px -5px hsl(0, 0%, 50%);
 }
 
 #nav-logo {
@@ -75,6 +82,39 @@ nav {
     border: 2px solid red;
     background-color: red;
     color: white;
+}
+
+/* ---------------------------------------------------------- */
+
+/* --------------------- Main ------------------------------- */
+
+#main {
+    flex: 1;
+    display: flex;
+}
+
+#content {
+    flex: 3 1 auto;
+    padding: 20px;
+}
+
+h1 {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.sidebar {
+    flex: auto;
+    background-color: hsl(0, 0%, 95%);
+}
+
+/* ---------------------------------------------------------- */
+
+/* -------------------- Footer ------------------------------ */
+
+#footer {
+    flex: 0 0 50px;
+    background-color: hsl(0, 0%, 15%);
 }
 
 /* ---------------------------------------------------------- */
