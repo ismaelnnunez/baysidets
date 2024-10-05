@@ -1,0 +1,156 @@
+html,
+body {
+	padding: 0;
+	margin: 0;
+
+	font-family: Arial;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 100vh;
+	background-color: hsl(0, 0%, 15%);
+}
+
+
+/* ---------------- Header ---------------- */
+
+#header {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	margin: 25px 0;
+}
+
+#header a {
+	display: flex;
+	align-items: center;
+}
+
+#header a img {
+	height: 100px;
+}
+
+
+/* ----------------- Main ------------------ */
+
+#main {
+	width: 90vw;
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	background-color: hsl(0, 0%, 90%);
+	border: 1.5px solid black;
+	border-radius: 25px;
+	/* box-shadow: 0 0 10px 5px hsl(0, 0%, 25%); */
+	box-shadow: 0 0 10px 5px hsl(0, 0%, 25%), inset 0 0 10px 5px hsl(0, 0%, 80%);
+}
+
+#nav-links {
+	flex: 0 0 fit-content;
+	display: flex;
+	justify-content: center;
+	height: fit-content;
+	padding: 0 25px;
+}
+
+.nav-link {
+	padding: 12px;
+	border: 0;
+	border-bottom: 3px solid black;
+	background-color: black;
+	color: hsl(0, 0%, 90%);
+	font-size: 16px;
+	font-weight: 900;
+}
+
+.nav-link:hover {
+	cursor: pointer;
+	background-color: transparent;
+	color: black;
+}
+
+#content {
+	padding: 25px;
+}
+
+h1 {
+	font-size: 24px;
+	font-weight: bold;
+	margin: 15px 0;
+	margin-bottom: 10px;
+}
+
+h1:before {
+	content: ">";
+	margin-right: 6px;
+}
+
+h2 {
+	font-size: 20px;
+	font-weight: bold;
+	margin: 10px 0;
+	margin-bottom: 5px;
+}
+
+h2:before {
+	content: ">>";
+	margin-right: 6px;
+}
+
+h3 {
+	font-size: 16px;
+	font-weight: bold;
+	margin: 10px 0;
+	margin-bottom: 5px;
+}
+
+h3:before {
+	content: ">>>";
+	margin-right: 6px;
+}
+
+p {
+	font-size: 16px;
+	text-align: justify;
+	margin: 0;
+}
+
+ul {
+	padding: 0;
+	margin: 0;
+	margin-left: 13.8px;
+	list-style: outside;
+}
+
+li {
+	padding-left: 6px;
+	font-size: 16px;
+}
+
+li > ul {
+	padding-left: 30px;
+}
+
+li::marker {
+	content: "~ ";
+	font-size: 16px;
+	font-weight: bolder;
+}
+
+.todo-completed {
+	font-style: italic;
+	text-decoration: line-through;
+	color: hsl(0, 0%, 60%);
+}
+
+
+/* ----------------- Footer ---------------- */
+
+#footer {
+	flex: 0 0 auto;
+	width: 100%;
+	height: 25px;
+}
