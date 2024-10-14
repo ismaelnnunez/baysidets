@@ -181,29 +181,35 @@ li::marker {
 
 table {
 	width: 100%;
+	font-size: 14px;
 	border: 1px solid black;
+	border-bottom: none;
 	border-spacing: 0;
 }
 
 th {
-	font-size: 16px;
 	font-weight: bold;
+	background-color: hsl(0, 0%, 60%);
+	border-right: 1px solid black;
+}
+
+th:last-child {
+	border-right: none;
 }
 
 th, td {
 	border-bottom: 1px solid black;
-	border-right: 1px solid hsl(0, 0%, 70%);
-	padding: 2px;
+	padding: 3px;
 }
 
 td {
-	font-size: 14px;
 	border-bottom: 1px solid black;
-	border-right: 1px solid hsl(0, 0%, 70%);
+	border-right: 1px solid hsl(0, 0%, 80%);
 }
 
 td.subheading {
 	font-weight: bold;
+	background-color: hsl(0, 0%, 80%);
 }
 
 /* ----------------- Footer ---------------- */

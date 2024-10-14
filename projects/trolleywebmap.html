@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>projects | Trolley Webmap | baysidets</title>
+		<link rel="stylesheet" href="../styles/main.css">
+	</head>
+
+	<body>
+		<div id="header">
+			<a href="../index.html">
+				<img src="../assets/logos/logo.svg">
+			</a>
+		</div>
+		<div id="main">
+			<div id="nav-links">
+				<a class="nav-link" href="../index.html" id="home">
+					home
+				</a>
+				<a class="nav-link" href="../projects.html" id="projects" style="background-color: hsl(30, 90%, 70%); color: black;">
+					projects
+				</a>
+				<a class="nav-link" href="../blog.html" id="blog">
+					blog
+				</a>
+				<a class="nav-link" href="../wiki.html"  id="wiki">
+					wiki
+				</a>
+			</div>
+			<div id="content">
+				<h1>TROLLEY WEBMAP</h1>
+				<h2>Scope</h2>
+				<p>The end product of this project is a map made available on the internet that shows the real-time live location of the Perth Amboy Hometown Heritage Trolley.</p>
+				<h2>Log</h2>
+				<h3>2024-10-13</h3>
+				<p>By this point, I've had this project on my plate for more than a few months, progressively chipping away at the research part of it but never really bringing it to a point where I can confidently say I know what I have to do. Let me break down the components of this project in order to describe the research I've done to this point and what is left (which is everything, basically):</p>
+				<ul>
+					<li>
+						<b>Tracking Device:</b> I am using a Freematics ONE+ Model A with an external GNSS receiver. The device connects to the trolley via OBD-II though I am currently connecting to my computer via USB. Eventually (soon) I'll have to test on a vehicle.
+					</li>
+					<li>
+						<b>Data Server:</b> The data from the Freematics device will transmit the data via WiFi to a Freematics server running on a DigitalOcean droplet listening on port 5170. The virtual private server (VPS) is crucial here in order to have a static IP address. I could go the DuckDNS route but that would just add more points of potential failure. The Freematics server is nice because it integrates a MySQL database as well as the Traccar Manager application which will help with debugging. The idea will be to grab from the database when building the webmap. Traccar has an API which may also be handy.
+					</li>
+					<i>Obviously there's a whole layer here missing which is how the web server will communicate with Traccar; will need to expand on this and detail any missing info, such as any issues I bumped into along the way, how I did everything, and any outstanding problems still being faced.</i>
+					<li>
+						<b>Web Server:</b> The website will run on an Apache2 web server running from the same DigitalOcean droplet listening on port 22 (or port 80, will have to confirm).
+					</li>
+					<li>
+						<b>The Actual Map:</b> A Leaflet.js front-end.
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="footer">
+			
+		</div>
+	</body>
+</html> 
