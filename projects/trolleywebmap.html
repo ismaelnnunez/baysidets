@@ -36,21 +36,28 @@
 				<p>The end product of this project is a map made available on the internet that shows the real-time live location of the Perth Amboy Hometown Heritage Trolley.</p>
 				<h2>Log</h2>
 				<h3>2024-10-13</h3>
-				<p>By this point, I've had this project on my plate for more than a few months, progressively chipping away at the research part of it but never really bringing it to a point where I can confidently say I know what I have to do. Let me break down the components of this project in order to describe the research I've done to this point and what is left (which is everything, basically):</p>
+				<p>By this point, I've had this project on my plate for more than a few months, progressively chipping away at the research part of it but never really bringing it to a point where I can confidently say I know what I have to do.</p>
+				<p>Let me break down the components of this project in order to describe the research I've done to this point and what is left (which is everything, basically):</p>
 				<ul>
 					<li>
-						<b>Tracking Device:</b> I am using a Freematics ONE+ Model A with an external GNSS receiver. The device connects to the trolley via OBD-II though I am currently connecting to my computer via USB. Eventually (soon) I'll have to test on a vehicle.
+						<b>Tracking Device:</b> I am using a Freematics ONE+ Model A with an external GNSS receiver. The device will connect to the trolley via OBD-II, though I am currently connecting to my computer via USB. Eventually (soon), I'll have to test on a vehicle.
+						<ul>
+							<li><b>Status:</b> The device is semi-operational. It turns on O.K. connecting to my laptop via USB. To get the device working as it should, I had to load and compile the telelogger sketch made available by Freematics (read the Developer Guide here: <a href="https://freematics.com/pages/products/freematics-one-plus/">https://freematics.com/pages/products/freematics-one-plus/</a> and the sketch source code here: <a href="https://github.com/stanleyhuangyc/Freematics/tree/master/firmware_v5/">https://github.com/stanleyhuangyc/Freematics/tree/master/firmware_v5/</a>). We had tried going the Freematics Arduino Builder route before with no success, so I went the PlatformIO route instead. I installed VS Code and the PlatformIO extension, which provided the Serial Monitor, which itself was key to checking on the state of the device as it communicated with the server.
+							<p>So I uploaded the sketch successfully after modifying <span class="file-path">config.h</span> to include the correct WiFi and server information. Checking the Traccar Manager confirmed that I installed the Traccar server correctly onto the virtual private server, registered the device correctly there, and configured the Freematics sketch properly. However, the device reported a 0, 0 latitude/longitude (what I learned is called the "null island").</p>
+							<p>This is where we're at now. I haven't managed to find a fix for it, but I wonder if this is because I've done all testing from the comfort of my apartment. Perhaps by testing by connecting to a vehicle via OBD-II, in motion and outdoors, I may get a different result. Another potentially confounding factor is the storage situation. I believe I asked the powers that be to purchase the device including the microSD card (which I believe should already come installed with the option of including it selected), but I have to verify by opening the little port on the side of the device. After verifying, I must go into <span class="file-path">config.h</span> and make sure it forces storage to the microSD.</p>
+							<p>While time passes as I get the opportunity to test with a vehicle, it's best that I go ahead and work on setting up the domain, web server, front-end, and back-end. I have a location data stream at least (though it's 0, 0), so it's something that I can get started with.</p></li>
+						</ul>
 					</li>
 					<li>
 						<b>Data Server:</b> The data from the Freematics device will transmit the data via WiFi to a Freematics server running on a DigitalOcean droplet listening on port 5170. The virtual private server (VPS) is crucial here in order to have a static IP address. I could go the DuckDNS route but that would just add more points of potential failure. The Freematics server is nice because it integrates a MySQL database as well as the Traccar Manager application which will help with debugging. The idea will be to grab from the database when building the webmap. Traccar has an API which may also be handy.
 					</li>
-					<i>Obviously there's a whole layer here missing which is how the web server will communicate with Traccar; will need to expand on this and detail any missing info, such as any issues I bumped into along the way, how I did everything, and any outstanding problems still being faced.</i>
 					<li>
 						<b>Web Server:</b> The website will run on an Apache2 web server running from the same DigitalOcean droplet listening on port 22 (or port 80, will have to confirm).
 					</li>
 					<li>
 						<b>The Actual Map:</b> A Leaflet.js front-end.
 					</li>
+					<!-- Obviously there's a whole layer here missing which is how the web server will communicate with Traccar; will need to expand on this and detail any missing info, such as any issues I bumped into along the way, how I did everything, and any outstanding problems still being faced.-->
 				</ul>
 			</div>
 		</div>
