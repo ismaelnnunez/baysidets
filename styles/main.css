@@ -107,6 +107,7 @@ a {
 
 #content {
 	padding: 25px;
+	padding-top: 15px;
 }
 
 h1 {
@@ -174,18 +175,18 @@ img {
 ul {
 	padding: 0;
 	margin: 0;
-	margin-left: 13.8px;
+	margin-left: 16px;
 	list-style: outside;
 }
 
 li {
-	padding-left: 6px;
+	padding-left: 8px;
 	font-size: 16px;
 	text-align: justify;
 }
 
-li > ul {
-	padding-left: 30px;
+ul > li {
+	margin-left: 16px;
 }
 
 li::marker {
@@ -232,6 +233,14 @@ td.subheading {
 	font-weight: bold;
 	background-color: hsl(0, 0%, 80%);
 }
+
+
+/* ------------ Particulars ---------------- */
+
+#research-topics-list tr td:nth-child(3) {
+	text-align: center;
+}
+
 
 /* ----------------- Footer ---------------- */
 
