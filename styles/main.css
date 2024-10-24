@@ -241,6 +241,10 @@ td.subheading {
 	text-align: center;
 }
 
+#research-topics-list {
+	flex: 1;
+}
+
 
 /* ----------------- Footer ---------------- */
 
