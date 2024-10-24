@@ -146,6 +146,42 @@ h3:before {
 	margin-right: 6px;
 }
 
+h4 {
+	font-size: 16px;
+	font-weight: bold;
+	margin: 5px 0;
+	margin-bottom: 5px;
+}
+
+h4:before {
+	content: ">>>>";
+	margin-right: 6px;
+}
+
+h5 {
+	font-size: 16px;
+	font-weight: bold;
+	margin: 5px 0;
+	margin-bottom: 5px;
+}
+
+h5:before {
+	content: ">>>>>";
+	margin-right: 6px;
+}
+
+h6 {
+	font-size: 16px;
+	font-weight: bold;
+	margin: 5px 0;
+	margin-bottom: 5px;
+}
+
+h6:before {
+	content: ">>>>>>";
+	margin-right: 6px;
+}
+
 p {
 	font-size: 16px;
 	text-align: justify;
@@ -189,7 +225,7 @@ ul > li {
 	margin-left: 16px;
 }
 
-li::marker {
+ul > li::marker {
 	content: "~ ";
 	font-size: 16px;
 	font-weight: bolder;
@@ -207,6 +243,7 @@ table {
 	border: 1px solid black;
 	border-bottom: none;
 	border-spacing: 0;
+	background-color: hsl(0, 0%, 90%);
 }
 
 th {
@@ -243,6 +280,10 @@ td.subheading {
 
 #research-topics-list {
 	flex: 1;
+}
+
+.wiki-wiki-wip {
+	color: red;
 }
 
 
