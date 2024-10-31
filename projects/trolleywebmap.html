@@ -35,6 +35,36 @@
 				<h2>Scope</h2>
 				<p>The end product of this project is a map made available on the internet that shows the real-time live location of the Perth Amboy Hometown Heritage Trolley.</p>
 				<h2>Log</h2>
+				<h3>2024-10-30</h3>
+				<ul>
+					<li><b>Tracking Device:</b> Unfortunately, the Freematics ONE+ did not work out in the field. They tested the device plugged into the OBD port of the trolley and while it turned on, it did not report any data to the server. It seems that the device was not connecting to the trolley's on-board WiFi whatsoever. Even after guiding them through re-uploading the sketch with the verified WiFi information using PlatformIO IDE, it wouldn't budge. Therefore, for now and probably permanently, the Freematics device is a no-go.
+					<p>Alternatively, we will be using a cellphone, probably an old iPhone they have laying around, and the Traccar Client app. This setup is way more straightforward and hassle-free, and despite the potential benefits the Freematics device presented (namely power via OBD and other vehicle-related data reporting), I admit this is the route we should have gone with from the get-go...</p>
+					<p>Setting up a phone to use Traccar Client is rather simple. All it takes is downloading the Traccar Client app, adding the device identifier provided in the app to the Traccar instance running on the Data Server, providing the correct server URL in the Client app, and toggling the service. We've tested this several times on multiple devices and there have been no issues. This is the really, really easy part though. Everything else, for me at least, is much harder to deal with.</p></li>
+					<li><b>Data Server:</b> The Traccar instance running on the instance is just fine still. I am learning how to properly send HTTP requests to it to get the data needed for the webmap, though I am finding it difficult to understand the documentation for the API. It doesn't help that the maintainer of the software loves giving dry, unhelpful responses to questions that point to exactly what I am having issues with.</li>
+					<li><b>Web Server:</b> I haven't yet set up DNS for the web server yet as I haven't been told a domain name. However, once the time comes, I'll also have to setup SSL/TLS as this will be a very public-facing website. This will be a good opportunity to learn about web security and SSL/TLS, the lessons from which I hope to apply to this website and any others I will create in the future.</li>
+					<li><b>Webmap:</b> This is where the magic is <i>supposed</i> to happen. I am not very concerned with the Leaflet stuff (styling, the route, etc.) What I am concerned about is setting up the Fetch constructs correctly to make the HTTP requests to get the position data of the trolley tracker from Traccar. One particular issue I am having right now is authenticating my requests. I'll write on this more extensively later, but I am getting a <span class="file-path">401: Unauthorized error</span> when I make my request. The headers I include in my request contain a base 64-encoded username/password combo, the username and password being those credentials I use to log into the Traccar manager running on the server. For one, I don't even know if that's the username/password combo that I am supposed to be providing, further yet if I am even <i>supposed</i> to be providing a username/password in the header. If I am, though, I don't know if "basic" is the right authentication method. This will all take more learning, Googling, and ChatGPTing that I have very little time to do.</li>
+				</ul>
+				<p><b>Let me try to summarize what I have left to do:</b></p>
+				<ul>
+					<li>
+						Successfully retrieve position data for the test device from Traccar using Fetch API or WebSocket API.
+						<ul>
+							<li>This may be easier due to the request going to and coming from the same machine, just different ports.</li>
+						</ul>
+					</li>
+					<li>
+						Establish a stable connection between webmap (web server) and Traccar (data server).
+					</li>
+					<li>
+						Reconfigure connection to acquire data from correct tracking device.
+					</li>
+					<li>
+						Properly organize webmap code (integrating scripts with <span class="file-path">index.html</span>).
+					</li>
+					<li>
+						Stylize Leaflet and webpage.
+					</li>
+				</ul>
 				<h3>2024-10-21</h3>
 				<p>I've managed to get some, but not a whole lot, more progress over the last days:</p>
 				<ul>
