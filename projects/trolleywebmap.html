@@ -35,6 +35,36 @@
 				<h2>Scope</h2>
 				<p>The end product of this project is a map made available on the internet that shows the real-time live location of the Perth Amboy Hometown Heritage Trolley.</p>
 				<h2>Log</h2>
+				<h3>2024-11-03</h3>
+				<p>There is still a lot of work to do but I think I'm getting closer.</p>
+				<ul>
+					<li>
+						<b>Tracking Device:</b> We are all locked and loaded with using Traccar Client on an old iPhone. The setup is mostly straightforward:
+						<ol>
+							<li>Install the <i>Traccar Client</i> application,</li>
+							<li>Open the application and insert the Server URL, which in this case is http://[ipv4 address]:8082,</li>
+							<li>Change the <i>Location accuracy</i> to "High",</li>
+							<li>Change the frequency to 10 (I will be updating this to something more frequent, maybe 1 second, or maybe 5),</li>
+							<li>On the server add, add a new device with the device identifier provided by the <i>Traccar Client</i> app,</li>
+							<li>Untoggle the <i>Service status</i> and retoggle it to start the connection.</li>
+						</ol>
+						<p>At this point, the device should appear <i>Online</i> on the Traccar web interface, but if it does not (as it so happened in my case), you may have to untoggle <i>Offline buffering</i> on the <i>Traccar Client</i> app and the restart the connection.</p>
+					</li>
+					<li>
+						<b>Data Server:</b> There haven't been many changes in this front, but I do want to get into a process I have had to carry out twice already before I have to do it again and have to waste an hour scrambling for the answer to. The issue in question is resetting the password for the "root" account in <i>MySQL</i>.
+						<p>First, it must be stated that when you first install MySQL, the "root" does not require a password. This applies if you've already set a password but happened to have forgotten it. I credit a combination of <a href="https://stackoverflow.com/questions/41984956/cant-reset-root-password-with-skip-grant-tables-on-ubuntu-16">this StackOverflow post</a> and <a href="https://www.digitalocean.com/community/tutorials/how-to-reset-your-mysql-or-mariadb-root-password">this DigitalOcean article</a> for the solution. Basically, you'll want to follow the accepted solution in the StackOverflow post until you get to the point where you have to set the new password, where instead, you should use <span class="file-path">ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password';</span> as the expression in the post is deprecated in recent versions of MySQL.</p>
+						<p>Another potential sticking point might be when running MySQL in safe mode using <span class="file-path">mysqld_safe --skip-grant-tables --skip-networking &</span>, where it might seem like it hangs after you execute the command, but in my experience you can just press enter to proceed to the next steps.</p>
+					</li>
+					<li><b>Web Server:</b> This is where much of the work the last few days has been spent. I set up SSL/TLS using the instructions I described <a href="https://baysidets.com/projects/baysidets.html">in my page about this website</a>. The process was basically identical. The client wanted to also reserve the .org TLD, so I also had to set up redirect rules on CloudFlare after registering the domain. They explain this process <a href="https://developers.cloudflare.com/fundamentals/setup/manage-domains/redirect-domain/">here</a> better than I possibly could. But anyway, now you can visit both <a href="https://perthamboytrolley.com">https://perthamboytrolley.com</a> and <a href="https://perthamboytrolley.org">https://perthamboytrolley.org</a> and you'll be taken to <a href="https://perthamboytrolley.com">https://perthamboytrolley.com</a>.</li>
+					<li>
+						<b>Webmap:</b> This is where most of the challenges have been concentrated. I have an O.K. hang on the Fetch API, at least as far as I need it for the webmap, but now I am coming across other networking and browser-related obstacles. As I tried to acquire the route by fetching the GeoJSON file I placed in a subfolder, I kept getting the following two errors: one related to Cross-Origin Resource Sharing (CORS), and the other related to mixed active content loading, and they are both related. I managed to resolve this issue for the GeoJSON (and this solution would apply to all local files) by changing the URL in the <i>fetch</i> call from a local one to the website using the "https" protocol, but it's a different beast entirely for when I fetch data from the Traccar server. It all comes down to the fact that the website is running on a HTTPS server, while the Traccar instance is running on an HTTP server, and browsers universally block requests from HTTPS origins to HTTP hosts. There are a few ways I've considered going about this:
+						<ol>
+							<li><i>Run the Traccar instance as am HTTPS server.</i> This would involve setting up an HTTPS proxy server that would be between the origins (requestors) and the host (Traccar server). I can do this with Apache, but I am already using Apache for the web server (on the same machine) and am not prepared with the knowledge on how to set up two separate web servers on the same machine using only Apache. I <i>think</i> there is a way to do this, and I can probably read up on it and do it, but I want to leave this as a last resort.</li>
+							<li><i>Instead of using the Traccar API, I can instead run some a script locally drawing directly from the Traccar database (MySQL).</i> This may just be what I end up doing.</li>
+							<li>Another partial solution was adding <span class="file-path">&lt;meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"&gt;</span> to my <span class="file-path">index.html</span>, but my understanding is that only elevates requests made via HTTP to HTTPS, which, if the host can't handle HTTPS, is pointless.</li>
+						</ol>
+					</li>
+				</ul>
 				<h3>2024-10-30</h3>
 				<ul>
 					<li><b>Tracking Device:</b> Unfortunately, the Freematics ONE+ did not work out in the field. They tested the device plugged into the OBD port of the trolley and while it turned on, it did not report any data to the server. It seems that the device was not connecting to the trolley's on-board WiFi whatsoever. Even after guiding them through re-uploading the sketch with the verified WiFi information using PlatformIO IDE, it wouldn't budge. Therefore, for now and probably permanently, the Freematics device is a no-go.
@@ -46,6 +76,15 @@
 				</ul>
 				<p><b>Let me try to summarize what I have left to do:</b></p>
 				<ul>
+					<li class="todo-completed">
+						Register domain(s), configure DNS, and configure TLS/SSL.
+						<ul>
+							<li class="todo-completed">Register domain(s) with CloudFlare after checking for availability.</li>
+							<li class="todo-completed">Configure DNS records for domain(s) in CloudFlare.</li>
+							<li class="todo-completed">Research to see if CloudFlare proxy conflicts with SSL/TLS. If not, proceed.</li>
+							<li class="todo-completed">Configure SSL/TLS.</li>
+						</ul>
+					</li>
 					<li>
 						Successfully retrieve position data for the test device from Traccar using Fetch API or WebSocket API.
 						<ul>
@@ -55,10 +94,10 @@
 					<li>
 						Establish a stable connection between webmap (web server) and Traccar (data server).
 					</li>
-					<li>
+					<li class="todo-completed">
 						Reconfigure connection to acquire data from correct tracking device.
 					</li>
-					<li>
+					<li class="todo-completed">
 						Properly organize webmap code (integrating scripts with <span class="file-path">index.html</span>).
 					</li>
 					<li>
