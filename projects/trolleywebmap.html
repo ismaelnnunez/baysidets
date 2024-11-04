@@ -35,6 +35,30 @@
 				<h2>Scope</h2>
 				<p>The end product of this project is a map made available on the internet that shows the real-time live location of the Perth Amboy Hometown Heritage Trolley.</p>
 				<h2>Log</h2>
+				<h3>2024-11-04</h3>
+				<p>I've managed a solid amount of progress today. Let's walk through it.</p>
+				<ul>
+					<li><b>Tracking Device:</b> No changes here. I have to get into the database and the API documentation to figure out what the device ID is that I have to call, but there is nothing else of note.</li>
+					<li>
+						<b>Data Server:</b> Picking up on yesterday's talk about CORS errors and potentially setting up SSL/TLS for the Traccar server, I figured this was the best course of action for today as setting up bash script to read the latest position straight from the database felt like cheating. After tons of trial and error, I managed to set up HTTPS for Traccar, but it required registering yet another domain. Here was my process:
+						<ol>
+							<li><b>Register a domain.</b> Since I've been using CloudFlare and I like the other features it offers to manage the domain, I registered <span class="file-path">patrolleytraccar.com</span> with them.</li>
+							<li><b>Follow the SSL/TLS setup process outlined <a href="https://baysidets.com/projects/baysidets.html">here</a>.</b> The setup was mostly the same with the exception of a few things I'll get into.</li>
+							<li><b>Allow a new SSL port in your firewall.</b> Since 443 is being used for the other web server, I allowed port 8443 on the firewall as follows: <span class="file-path">sudo ufw allow 8443</span></li>
+							<li><b>Set up a new site configuration for the Traccar instance.</b> I grabbed mine directly from <a href="https://www.traccar.org/secure-connection/">the Traccar documentation</a> while changing the server name from <span class="file-path">demo.traccar.org</span> to <span class="file-path">patrolleytraccar.com</span>, the port from 443 to 8443, and the SSL key locations to their corresponding ones.</li>
+							<li>
+								<b>Alter the <span class="file-path">ports.conf</span> file.</b> This was the mistake I made that had me troubleshooting for at least an hour. I altered my <span class="file-path">ports.conf</span> to include the following:
+								<p class="file-path">
+									&lt;IfModule mod_ssl.c&gt;</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;Listen 8443</br>
+									&lt;/IfModule&gt;
+								</p>
+							</li>
+						</ol>
+					</li>
+					<li><b>Web Server:</b> No changes here.</li>
+					<li><b>Webmap:</b> Placeholder.</li>
+				</ul>
 				<h3>2024-11-03</h3>
 				<p>There is still a lot of work to do but I think I'm getting closer.</p>
 				<ul>
@@ -54,6 +78,7 @@
 						<b>Data Server:</b> There haven't been many changes in this front, but I do want to get into a process I have had to carry out twice already before I have to do it again and have to waste an hour scrambling for the answer to. The issue in question is resetting the password for the "root" account in <i>MySQL</i>.
 						<p>First, it must be stated that when you first install MySQL, the "root" does not require a password. This applies if you've already set a password but happened to have forgotten it. I credit a combination of <a href="https://stackoverflow.com/questions/41984956/cant-reset-root-password-with-skip-grant-tables-on-ubuntu-16">this StackOverflow post</a> and <a href="https://www.digitalocean.com/community/tutorials/how-to-reset-your-mysql-or-mariadb-root-password">this DigitalOcean article</a> for the solution. Basically, you'll want to follow the accepted solution in the StackOverflow post until you get to the point where you have to set the new password, where instead, you should use <span class="file-path">ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password';</span> as the expression in the post is deprecated in recent versions of MySQL.</p>
 						<p>Another potential sticking point might be when running MySQL in safe mode using <span class="file-path">mysqld_safe --skip-grant-tables --skip-networking &</span>, where it might seem like it hangs after you execute the command, but in my experience you can just press enter to proceed to the next steps.</p>
+						<p>After coming back to this the next day, I've realized another mistake I made. So while I updated my password manually within MySQL, I did not update it in the <span class="file-path">traccar.xml</span>. I freaked out for a bit when I could not connect to the page, but ChatGPT and some common sense led me to my lightbulb moment.</p>
 					</li>
 					<li><b>Web Server:</b> This is where much of the work the last few days has been spent. I set up SSL/TLS using the instructions I described <a href="https://baysidets.com/projects/baysidets.html">in my page about this website</a>. The process was basically identical. The client wanted to also reserve the .org TLD, so I also had to set up redirect rules on CloudFlare after registering the domain. They explain this process <a href="https://developers.cloudflare.com/fundamentals/setup/manage-domains/redirect-domain/">here</a> better than I possibly could. But anyway, now you can visit both <a href="https://perthamboytrolley.com">https://perthamboytrolley.com</a> and <a href="https://perthamboytrolley.org">https://perthamboytrolley.org</a> and you'll be taken to <a href="https://perthamboytrolley.com">https://perthamboytrolley.com</a>.</li>
 					<li>
