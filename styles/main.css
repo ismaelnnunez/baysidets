@@ -290,11 +290,11 @@ td.subheading {
 
 /* ------------ Particulars ---------------- */
 
-#references li {
+.references li {
 	font-size: 12px;
 }
 
-#references li::marker {
+.references li::marker {
 	content: "[" counter(list-item) "]";
 }
 

@@ -35,6 +35,19 @@
 				<h2>Scope</h2>
 				<p>The end product of this project is a map made available on the internet that shows the real-time live location of the Perth Amboy Hometown Heritage Trolley.</p>
 				<h2>Log</h2>
+				<h3>2024-11-11</h3>
+				<p>I promise I'll get into specifics soon, but for now, I need to make a comprehensive list of what's left before launch.</p>
+				<ul>
+					<li>Enhance website security specifically as it concerns HTTP request headers and <span class="file-path">config.json</span>.</li>
+					<li class="todo-completed">Add a legend.</li>
+					<li>Look into layer rendering order. Not sure if I want the trolley to render above all, but I need to get a handle on how to control it generally.</li>
+					<li class="todo-completed">Consider changing trolley icon color scheme. Look at Vine Transit and other example webmaps. Lots of them have the icon the same color as the route (orange in our case).</li>
+					<li class="todo-completed">Consider making everything thicker and bigger (icons and route).</li>
+					<li class="todo-completed">Explore other map tiles that provide more contrast.</li>
+					<li>Add some directional arrows to the route.</li>
+					<li>Animate trolley movement.</li>
+					<li>Fix Leaflet/map tile attribution.</li>
+				</ul>
 				<h3>2024-11-10</h3>
 				<p>I've done a lot in the past few days and I will get to all of that soon, but I wanted to document a couple of key changes I've made that solved some big problems.</p>
 				<ol>
@@ -194,8 +207,51 @@
 							<li><b>Status:</b> I am slowly starting to develop this as I go through the Leaflet.js documentation. I've managed to initialize a map instance, set up some markers, and add the route as a GeoJSON. Right now, the GeoJSON is real ugly so I'll need to prettify it without having Vim go crazy on me since I have braces mapped to automatically close themselves. At some point too, it would be ideal to have the GeoJSON as a separate file imported into the script, but I don't yet understand asynchronous Javascript very well and how I'd direct Leaflet to look for the GeoJSON on the web-server-to-be.</li>
 						</ul>
 					</li>
-					<!-- Obviously there's a whole layer here missing which is how the web server will communicate with Traccar; will need to expand on this and detail any missing info, such as any issues I bumped into along the way, how I did everything, and any outstanding problems still being faced.-->
 				</ul>
+				<h2>References</h2>
+				<h3>Reference Material</h3>
+				<ol class="references">
+					<li><a href="https://www.youtube.com/watch?v=8KX4_4NK7ZY">YouTube - Real time location tracker app on leafletjs</a></li>
+					<li><a href="https://trilliumtransit.com/">Trillium Transit</a></li>
+					<li><a href="https://maps.trilliumtransit.com/map/feed/vinetransit-ca-us/routes/10?noui=true&page_embed=true">Vine Transit Interactive System Map</a></li>
+					<li><a href="https://perthamboytrolley.my.canva.site/">Perth Amboy Trolley Canva Page</a></li>
+					<li><a href="https://github.com/herrdragon/busTrackingGps?tab=readme-ov-file">GitHub - busTrackingGps</a></li>
+					<li><a href="https://github.com/qtrandev/MiamiTrolleyInfo">GitHub - MiamiTrolleyInfo</a></li>
+				</ol>
+				<h3>Traccar</h3>
+				<ol class="references">
+					<li><a href="https://www.traccar.org/troubleshooting/#point-5">Traccar - Troubleshooting</a></li>
+					<li><a href="https://www.traccar.org/devices/">Traccar - Supported Devices</a></li>
+					<li><a href="https://www.reddit.com/r/homeassistant/comments/gsubr9/vehicle_device_tracker_or_how_the_death_of/">Vehicle device tracker (or how the death of Automatic prompted me to find another way to exercise total control over my data and my OBD2 ports)</a></li>
+					<li><a href="https://www.traccar.org/install-digitalocean/">Install Traccar on DigitalOcean VPS</a></li>
+					<li><a href="https://www.traccar.org/api-reference/">Traccar - API Reference</a></li>
+					<li><a href="https://www.traccar.org/traccar-api/">Traccar - API</a></li>
+					<li><a href="https://github.com/traccar/traccar/blob/master/src/main/java/org/traccar/config/Keys.java">GitHub - traccar - config</a></li>
+					<li><a href="https://www.traccar.org/configuration-file/">Traccar - Configuration File</a></li>
+				</ol>
+				<h3>Leaflet</h3>
+				<ol class="references">
+					<li><a href="https://github.com/perliedman/leaflet-realtime/tree/master">GitHub - Leaflet Realtime</a></li>
+					<li><a href="https://tomickigrzegorz.github.io/leaflet-examples/">Leaflet Examples</a></li>
+					<li><a href="https://leafletjs.com/examples/quick-start/">Leaflet - Quick Start Guide</a></li>
+					<li><a href="https://www.reddit.com/r/gis/comments/k5poj2/which_tool_leaflet_openlayers_etc_would_you/">Reddit - Which tool (leaflet, OpenLayers etc..) would you recommend for a web map which allows users to change the attribute of vector shapes?</a></li>
+				</ol>
+				<h3>CORS</h3>
+				<ol class="references">
+					<li><a href="https://www.traccar.org/forums/topic/traccar-cors-configuration/">Traccar - CORS Configuration</a></li>
+					<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin">MDN - Access-Control-Allow-Origin</a></li>
+					<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests">MDN - upgrade-insecure-requests</a></li>
+					<li><a href="https://stackoverflow.com/questions/10636611/how-does-the-access-control-allow-origin-header-work">StackOverflow - How does the 'Access-Control-Allow-Origin' header work?</a></li>
+				</ol>
+				<h3>Freematics</h3>
+				<ol class="references">
+					<li><a href="https://freematics.com/pages/products/freematics-one-plus/guide/">Freematics ONE Developer Guide</a></li>
+				</ol>
+				<h3>Fetch API</h3>
+				<ol class="references">
+					<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">MDN - async function</a></li>
+					<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch">MDN - Using the Fetch API</a></li>
+				</ol>
 			</div>
 		</div>
 		<div id="footer">
